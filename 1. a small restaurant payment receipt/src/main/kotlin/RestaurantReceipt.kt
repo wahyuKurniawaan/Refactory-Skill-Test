@@ -1,5 +1,5 @@
-package refactory
 
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,11 +19,18 @@ fun main() {
         header(name, restoName)
     }
     var total = 0
-    for (i in 0..menu.size-1) {
-        println("\n" + textLayout(menu[i], "Rp.${price[i]}", 30, '.'))
+    for (i in 0 until menu.size) {
+        val dec = DecimalFormat("#,###")
+        println("\n" + textLayout(menu[i],
+            "Rp.${dec.format(price[i]).toString().replace(',', '.')}",
+            30,
+            '.'))
         total += price[i]
         if (i==menu.size-1) {
-            println("\n\n" + textLayout("Total", "Rp.$total", 30, '.'))
+            println("\n\n" + textLayout("Total",
+                "Rp.${dec.format(total).toString().replace(',', '.')}",
+                30,
+                '.'))
         }
     }
 
@@ -47,36 +54,39 @@ fun inputMenu( menu: ArrayList<String>, price: ArrayList<Int>) {
         inputMenu(menu, price)
     }
 }
-fun alignCenter(text: String, width: Int): String {
-    val widthText = text.length
-    val countBlank = (width - widthText) / 2
-    var blank = ""
 
-    for (i in 1..countBlank){
-        blank += " "
-    }
-
-    return "$blank$text$blank"
-}
 fun header(name: String, restoName:String){
     val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
     val currentDate = sdf.format(Date())
 
-    println(alignCenter(restoName, 30))
+    if (restoName.length <= 30) println(alignCenter(restoName, 30))
+    else {
+        val longRestoName = restoName.chunked(30)
+        longRestoName.forEach { println(alignCenter(it, 30)) }
+    }
     println()
     println(textLayout("Tanggal : ", currentDate, 30, ' '))
     println()
 
-    if (name.length <= 17) {
-        println(textLayout("Nama Kasir : ", name, 30, ' '))
-    } else {
-        println("Nama Kasir : \n ${alignCenter(name, 30)}")
+    when {
+        name.length <= 17 -> {
+            println(textLayout("Nama Kasir : ", name, 30, ' '))
+        }
+        name.length <= 30 -> {
+            println("Nama Kasir : \n ${alignCenter(name, 30)}")
+        }
+        else -> {
+            val longName = name.chunked(30)
+            println("Nama Kasir : ")
+            longName.forEach { println(alignCenter(it, 30)) }
+        }
     }
     println()
 
     for (line in 1..30) print("=")
     println()
 }
+
 fun textLayout(left: String, right: String, width: Int, blank_char: Char) : String {
     val countLeft = left.length
     val countRight = right.length
@@ -98,4 +108,16 @@ fun textLayout(left: String, right: String, width: Int, blank_char: Char) : Stri
         blank += blank_char
     }
     return "$textLeft$blank$right"
+}
+
+fun alignCenter(text: String, width: Int): String {
+    val widthText = text.length
+    val countBlank = (width - widthText) / 2
+    var blank = ""
+
+    for (i in 1..countBlank){
+        blank += " "
+    }
+
+    return "$blank$text$blank"
 }
