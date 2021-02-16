@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="85dp"
+    android:layout_marginHorizontal="5dp"
+    android:background="@drawable/bg_date_selected"
+
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="11dp"
+    android:paddingVertical="7dp">
+
+    <View
+        android:id="@+id/dots"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:background="@drawable/dots" />
+
+    <TextView
+        android:id="@+id/tv_day_calendar_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/s"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:viewBindingIgnore="true" />
+
+    <TextView
+        android:id="@+id/tv_date_calendar_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_11"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        tools:viewBindingIgnore="true" />
+
+</LinearLayout>
